@@ -25,3 +25,38 @@ export interface IProduct {
     count: number;
   };
 }
+
+export interface ILoginFormData {
+  email: string;
+  password: string;
+}
+
+export interface IRegisterFormData {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  address: string;
+  phone: string;
+}
+
+export interface IUser {
+  id: string | number;
+  password: string;
+  firstname: string;
+  lastname: string;
+  address: string;
+  phone: string;
+}
+
+export interface IAuthState {
+  user: IUser | null;
+  accessToken: string | null;
+  loading: "idle" | "pending" | "succeed" | "failed";
+  error: string | null;
+}
+
+export type TLoginResponse = {
+  user: IUser | null;
+  accessToken: string | null;
+};

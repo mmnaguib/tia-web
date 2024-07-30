@@ -1,0 +1,20 @@
+{
+    "welcome": "Welcome",
+    "home": "Home Page",
+    "tia": "Tia Store",
+    "categories": "Categories",
+    "contact": "Contact Us",
+    "welcomeToOurStore": "welcome To Our Store",
+    "email": "Email",
+    "password": "Password",
+    "save": "Save",
+    "doHaveAccount": "Do Have Account?",
+    "don'tHaveAccount": "Don't Have Account?",
+    "register": "Register",
+    "firstName": "firstName",
+    "lastName": "Last Name",
+    "confirmpassword": "Confirm Password",
+    "address": "Address",
+    "phone": "Phone",
+    "login": "Login"
+}

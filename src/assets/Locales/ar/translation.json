@@ -1,0 +1,20 @@
+{
+    "welcome": "مرحبا",
+    "home": "الرئيسية",
+    "tia": "متجر تيا",
+    "categories": "الاقسام",
+    "contact": "تواصل معنا",
+    "welcomeToOurStore": "مرحبا بك في متجرنا",
+    "email": "البريد الالكتروني",
+    "password": "كلمة المرور",
+    "save": "حفظ",
+    "doHaveAccount": "ألديك حساب ؟",
+    "don'tHaveAccount": "ليس لديك حساب ؟",
+    "register": "تسجيل حساب جديد",
+    "firstName": "الاسم الاول",
+    "lastName": "اسم العائلة",
+    "confirmpassword": "تأكيد كلمة المرور",
+    "address": "العنوان",
+    "phone": "الهاتف",
+    "login": "تسجيل الدخول"
+}

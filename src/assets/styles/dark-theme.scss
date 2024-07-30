@@ -1,0 +1,28 @@
+.dark-theme {
+  background-color: #333;
+  color: #ffffff;
+  .navbar {
+    background-color: #333;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    .right {
+      border-bottom: 3px solid #fff;
+    }
+    .middle .links li a {
+      color: #fff;
+    }
+    .left i {
+      color: #fff;
+    }
+  }
+  .lang-toggle-button {
+    background-color: #444;
+    color: white;
+    &:hover {
+      background-color: #666;
+    }
+  }
+  .app-container {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}

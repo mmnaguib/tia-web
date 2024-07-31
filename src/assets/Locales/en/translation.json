@@ -16,5 +16,9 @@
     "confirmpassword": "Confirm Password",
     "address": "Address",
     "phone": "Phone",
-    "login": "Login"
+    "login": "Login",
+    "avaibleSizes": "Avaible Sizes",
+    "avaibleColors": "Avaible Colors",
+    "numberInStock": "Number In Stock",
+    "products": "Products"
 }

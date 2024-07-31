@@ -16,5 +16,9 @@
     "confirmpassword": "تأكيد كلمة المرور",
     "address": "العنوان",
     "phone": "الهاتف",
-    "login": "تسجيل الدخول"
+    "login": "تسجيل الدخول",
+    "avaibleSizes": "المقاسات المتاحة",
+    "avaibleColors": "الالوان المتاحة",
+    "numberInStock": "العدد المتاح",
+    "products": "المنتجات"
 }

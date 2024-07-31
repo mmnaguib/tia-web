@@ -9,6 +9,8 @@ import Categories from "../pages/Categories/Categories";
 import Login from "../pages/Auth/Login";
 import Contact from "../pages/Contact/Contact";
 import Register from "../pages/Auth/Register";
+import Products from "../pages/Products/Products";
+import SingleProduct from "../pages/Products/SingleProduct";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +18,8 @@ const router = createBrowserRouter(
       <Route index element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="home" element={<Home />} />
+      <Route path="products" element={<Products />} />
+      <Route path="products/:id" element={<SingleProduct />} />
       <Route path="categories" element={<Categories />} />
       <Route path="contact" element={<Contact />} />
     </Route>

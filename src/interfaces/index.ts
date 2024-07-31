@@ -26,6 +26,12 @@ export interface IProduct {
   };
 }
 
+export interface IProductsState {
+  products: IProduct[];
+  loading: "idle" | "pending" | "succeed" | "failed";
+  error: string | null;
+  product: IProduct;
+}
 export interface ILoginFormData {
   email: string;
   password: string;
@@ -59,4 +65,8 @@ export interface IAuthState {
 export type TLoginResponse = {
   user: IUser | null;
   accessToken: string | null;
+};
+
+export type TRejected = {
+  rejectValue: string;
 };

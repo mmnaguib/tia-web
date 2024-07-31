@@ -1,11 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ILoginFormData, TLoginResponse } from "../../../interfaces";
+import { ILoginFormData, TLoginResponse, TRejected } from "../../../interfaces";
 import axiosErrorHandler from "../../../utils/axiosErrorHandler";
 
-type TRejected = {
-  rejectValue: string;
-};
 const actAuthLogin = createAsyncThunk<
   TLoginResponse,
   ILoginFormData,

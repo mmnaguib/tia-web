@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAuthState, TLoginResponse } from "../../interfaces";
-import actAuthLogin from "./act/actLogin";
-import actAuthRegister from "./act/actRegister";
+import actAuthLogin from "../act/Auth/actLogin";
+import actAuthRegister from "../act/Auth/actRegister";
 
 const initialState: IAuthState = {
   user: null,

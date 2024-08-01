@@ -1,10 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./index.scss";
 import { useTranslation } from "react-i18next";
 import ToggleLang from "../ToggleLang";
 import ToggleTheme from "../ToggleTheme";
+import { UseAppSelector } from "../../app/hooks";
 
 const Navbar = () => {
+  const { items } = UseAppSelector((state) => state.cart);
   const { t } = useTranslation();
   return (
     <div className="navbar">
@@ -29,6 +31,10 @@ const Navbar = () => {
         <i className="fa fa-user"></i>
         <ToggleTheme />
         <ToggleLang />
+        <Link to="/cart" className="shoppingCartDiv">
+          <i className="fa fa-shopping-cart"></i>
+          <span>{items.length}</span>
+        </Link>
       </div>
     </div>
   );

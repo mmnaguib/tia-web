@@ -1,0 +1,39 @@
+.cartItemsContain {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+  .cartItem {
+    border: 1px solid var(--main-color);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 700px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    .imgCart {
+      margin: 0 30px;
+      text-align: center;
+      position: relative;
+      .removeBtn {
+        background-color: #f00;
+        border: 0;
+        color: #fff;
+        position: absolute;
+        left: -10px;
+        bottom: -10px;
+        width: 70px;
+        height: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+    .cartDetail {
+      position: relative;
+      margin-right: 75px;
+    }
+    .quantityAStock {
+      display: flex;
+    }
+  }
+}

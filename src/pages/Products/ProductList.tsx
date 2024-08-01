@@ -5,11 +5,13 @@ import "./product.scss";
 import { sliceDescription } from "../../utils/functions";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { addProductToCart } from "../../app/slices/CartSlice";
 
 const ProductList = () => {
   const { products } = UseAppSelector((state) => state.product);
   const dispatch = UseAppDispatch();
   const { t } = useTranslation();
+  const quantity = 1;
   useEffect(() => {
     dispatch(actProducts());
   }, [dispatch]);
@@ -47,7 +49,12 @@ const ProductList = () => {
         </div> */}
       </div>
       <div>
-        <button className="addToCartBtn">{t("addToCart")}</button>
+        <button
+          onClick={() => dispatch(addProductToCart({ product, quantity }))}
+          className="addToCartBtn"
+        >
+          {t("addToCart")}
+        </button>
       </div>
     </div>
   ));

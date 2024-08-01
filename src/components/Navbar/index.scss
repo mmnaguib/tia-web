@@ -1,39 +1,57 @@
 .navbar {
-    background-color: #f7f7f7;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  .right {
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 3px solid #000;
+    font-style: italic;
+  }
+
+  .middle {
+    .links {
+      display: flex;
+      gap: 20px;
+
+      li {
+        a {
+          text-decoration: none;
+          color: #000;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .left {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-
-    .right {
-        font-size: 25px;
+    i {
+      font-size: 20px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .shoppingCartDiv {
+      position: relative;
+      text-decoration: none;
+      color: var(--main-color);
+      span {
+        position: absolute;
+        top: -14px;
+        left: -10px;
+        background: var(--main-color);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 22px;
+        color: #fff;
         font-weight: bold;
-        border-bottom: 3px solid #000;
-        font-style: italic;
+      }
     }
-
-    .middle {
-        .links {
-            display: flex;
-            gap: 20px;
-
-            li {
-                a {
-                    text-decoration: none;
-                    color: #000;
-                    font-size: 20px;
-                }
-            }
-        }
-
-    }
-
-    .left {
-        i{
-            font-size: 20px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
-    }
+  }
 }

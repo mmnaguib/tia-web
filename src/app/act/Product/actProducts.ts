@@ -8,7 +8,7 @@ const actProducts = createAsyncThunk<IProduct[], void, TRejected>(
   async (_, thunk) => {
     const { rejectWithValue } = thunk;
     try {
-      const res = await axios.get<IProduct[]>("http://localhost:5000/products");
+      const res = await axios.get<IProduct[]>("http://localhost:3005/products");
       return res.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

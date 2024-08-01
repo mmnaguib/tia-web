@@ -11,7 +11,7 @@ const actProduct = createAsyncThunk<
   const { rejectWithValue } = thunk;
   try {
     const res = await axios.get<IProduct>(
-      `http://localhost:5000/products/${id}`
+      `http://localhost:3005/products/${id}`
     );
     return res.data;
   } catch (error) {

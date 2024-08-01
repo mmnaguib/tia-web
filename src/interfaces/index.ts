@@ -6,11 +6,11 @@ export interface ICategory {
 }
 
 export interface IProduct {
-  id?: string | number | undefined;
+  id: string | number;
   title: string;
   description: string;
   price: string;
-  quantity?: number;
+  quantity: number;
   brand: string;
   category: {
     name: string;
@@ -70,3 +70,7 @@ export type TLoginResponse = {
 export type TRejected = {
   rejectValue: string;
 };
+
+export interface ICartState {
+  items: IProduct[];
+}

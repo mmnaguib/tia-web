@@ -520,5 +520,19 @@
             ],
             "inStock": 10
         }
+    ],
+    "categories": [
+        {
+            "name": "men's clothing"
+        },
+        {
+            "name": "jewelery"
+        },
+        {
+            "name": "women's clothing"
+        },
+        {
+            "name": "electronics"
+        }
     ]
 }

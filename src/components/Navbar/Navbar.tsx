@@ -14,7 +14,10 @@ const Navbar = () => {
       <div className="middle">
         <ul className="links">
           <li>
-            <NavLink to="/">{t("home")}</NavLink>
+            <NavLink to="/home">{t("home")}</NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin">{t("admin")}</NavLink>
           </li>
           <li>
             <NavLink to="/products">{t("products")}</NavLink>

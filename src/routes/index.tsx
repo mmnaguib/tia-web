@@ -12,12 +12,14 @@ import Register from "../pages/Auth/Register";
 import Products from "../pages/Products/Products";
 import SingleProduct from "../pages/Products/SingleProduct";
 import Cart from "../pages/Cart/Cart";
+import Admin from "../Admin/Admin";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="admin" element={<Admin />} />
       <Route path="home" element={<Home />} />
       <Route path="products" element={<Products />} />
       <Route path="products/:id" element={<SingleProduct />} />

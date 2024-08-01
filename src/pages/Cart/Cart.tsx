@@ -1,89 +1,129 @@
 import { useState, useEffect } from "react";
 import { UseAppDispatch, UseAppSelector } from "../../app/hooks";
 import "./Cart.scss";
-import { removeProductFromCart } from "../../app/slices/CartSlice";
+import {
+  removeProductFromCart,
+  updateProductQuantity,
+} from "../../app/slices/CartSlice";
 import { sliceDescription } from "../../utils/functions";
+import { useTranslation } from "react-i18next";
+
+// Define the type for the quantities state
+type QuantitiesType = {
+  [key: number]: number | undefined;
+};
 
 const Cart = () => {
   const { items } = UseAppSelector((state) => state.cart);
-  const [quantities, setQuantities] = useState<number[]>([]);
   const dispatch = UseAppDispatch();
+  const { t } = useTranslation();
 
-  // Initialize quantities state when items change
+  // State to store quantities of each item
+  const [quantities, setQuantities] = useState<QuantitiesType>({});
+
+  // Initialize quantities state from Redux store on mount
   useEffect(() => {
-    const initialQuantities = items.map(() => 1); // default quantity is 1 for each item
+    const initialQuantities: QuantitiesType = items.reduce((acc, item) => {
+      acc[item.id] = item.quantity;
+      return acc;
+    }, {} as QuantitiesType);
     setQuantities(initialQuantities);
   }, [items]);
 
-  const handleQuantityChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const newQuantity = Number(e.target.value);
-    if (newQuantity > 0) {
-      setQuantities((prevQuantities) => {
-        const newQuantities = [...prevQuantities];
-        newQuantities[index] = newQuantity;
-        return newQuantities;
-      });
+  // Update quantities in the Redux store whenever local state changes
+  useEffect(() => {
+    // To avoid multiple dispatches, only dispatch updates when quantities change
+    Object.keys(quantities).forEach((key) => {
+      const itemId = Number(key);
+      const newQuantity = quantities[itemId];
+      if (newQuantity !== undefined) {
+        dispatch(updateProductQuantity({ id: itemId, quantity: newQuantity }));
+      }
+    });
+  }, [quantities, dispatch]);
+
+  // Handle quantity change
+  const handleQuantityChange = (itemId: number, newQuantity: number) => {
+    if (newQuantity >= 1) {
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [itemId]: newQuantity,
+      }));
     }
   };
 
-  const incrementQuantity = (index: number) => {
+  // Increase quantity
+  const increaseQuantity = (itemId: number) => {
     setQuantities((prevQuantities) => {
-      const newQuantities = [...prevQuantities];
-      newQuantities[index] += 1;
-      return newQuantities;
+      const newQuantity = (prevQuantities[itemId] || 1) + 1;
+      return {
+        ...prevQuantities,
+        [itemId]: newQuantity,
+      };
     });
   };
 
-  const decrementQuantity = (index: number) => {
+  // Decrease quantity
+  const decreaseQuantity = (itemId: number) => {
     setQuantities((prevQuantities) => {
-      const newQuantities = [...prevQuantities];
-      if (newQuantities[index] > 1) {
-        newQuantities[index] -= 1;
-      }
-      return newQuantities;
+      const newQuantity = Math.max((prevQuantities[itemId] || 1) - 1, 1);
+      return {
+        ...prevQuantities,
+        [itemId]: newQuantity,
+      };
     });
   };
 
-  const cartItems = items.map((item, index) => (
+  // Calculate total price
+  const totalPrice = items.reduce((total, item) => {
+    const quantity = quantities[item.id] || 1;
+    return total + +item.price * quantity;
+  }, 0);
+
+  const cartItems = items.map((item) => (
     <div key={item.id} className="cartItem">
       <div className="imgCart">
         <img src={item.images[0]} width="100px" alt={item.title} />
-
-        <button
-          className="removeBtn"
-          onClick={() => dispatch(removeProductFromCart(item.id))}
-        >
-          <i className="fa fa-x"></i>
-        </button>
       </div>
 
       <div className="cartDetail" id={`product${item.id}`}>
         <h2>{item.title}</h2>
         <p>{sliceDescription(item.description, 30)}</p>
-        <p>Price: {item.price}</p>
+        <p>
+          <span className="price">{item.price}</span>{" "}
+          <span className="poundName">{t("EGP")}</span>
+        </p>
+        <p>{item.inStock >= 1 ? t("inStock") : t("outStock")}</p>
         <div className="quantityAStock">
-          {item.inStock >= 1 ? "In Stock" : "Out of Stock"}
           <div className="quantityControl">
             <button
-              onClick={() => decrementQuantity(index)}
-              disabled={quantities[index] <= 1}
+              className="decrease quantityBtn"
+              onClick={() => decreaseQuantity(item.id)}
+              disabled={quantities[item.id] === 1}
             >
               -
             </button>
             <input
-              value={quantities[index] || 1}
-              onChange={(e) => handleQuantityChange(e, index)}
-              type="string"
+              value={quantities[item.id] || 1}
+              onChange={(e) => handleQuantityChange(item.id, +e.target.value)}
+              type="number"
               data-product-id={item.id}
+              min="1"
+              className="quantityInput"
+              disabled={quantities[item.id] === item.inStock}
             />
             <button
-              onClick={() => incrementQuantity(index)}
-              disabled={quantities[index] >= item.inStock}
+              className="increase quantityBtn"
+              onClick={() => increaseQuantity(item.id)}
             >
               +
+            </button>
+
+            <button
+              className="removeBtn"
+              onClick={() => dispatch(removeProductFromCart(item.id))}
+            >
+              {t("delete")}
             </button>
           </div>
         </div>
@@ -91,14 +131,10 @@ const Cart = () => {
     </div>
   ));
 
-  const totalPrice = items.reduce((total, item, index) => {
-    return total + +item.price * (quantities[index] || 1);
-  }, 0);
-
   return (
     <div className="cartItemsContain">
-      <div>{cartItems}</div>
-      <div>Total Price: {totalPrice}</div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>{cartItems}</div>
+      <div>Total Price: {totalPrice.toFixed(2)}$</div>
     </div>
   );
 };

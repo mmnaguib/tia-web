@@ -6,11 +6,11 @@ export interface ICategory {
 }
 
 export interface IProduct {
-  id: string | number;
+  id: number;
   title: string;
   description: string;
-  price: string;
-  quantity: number;
+  price: number;
+  quantity?: number;
   brand: string;
   category: {
     name: string;

@@ -20,5 +20,9 @@
     "avaibleSizes": "Avaible Sizes",
     "avaibleColors": "Avaible Colors",
     "numberInStock": "Number In Stock",
-    "products": "Products"
+    "products": "products",
+    "EGP": "EGP",
+    "delete": "Delete",
+    "inStock": "In Stock",
+    "outStock": "Out Stock"
 }

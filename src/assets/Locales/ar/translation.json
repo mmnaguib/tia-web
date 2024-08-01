@@ -20,5 +20,9 @@
     "avaibleSizes": "المقاسات المتاحة",
     "avaibleColors": "الالوان المتاحة",
     "numberInStock": "العدد المتاح",
-    "products": "المنتجات"
+    "products": "المنتجات",
+    "EGP": "جنيه مصري",
+    "delete": "حذف",
+    "inStock": "متاح",
+    "outStock": "غير متاح"
 }

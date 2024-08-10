@@ -5,7 +5,7 @@ const RootLayout = () => {
   const location = useLocation();
 
   // Define the paths where the Navbar should not be displayed
-  const hideNavbarPaths = ["/", "/register"];
+  const hideNavbarPaths = ["/login", "/register"];
 
   return (
     <>

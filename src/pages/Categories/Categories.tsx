@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import Axiosinstance from "../../config/axiosInstanse";
 
 export interface ICategory {
   name: string;
@@ -9,9 +9,9 @@ const Categories = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
-    axios
-      .get<ICategory[]>("http://localhost:3005/categories")
-      .then((res) => setCategories(res.data));
+    Axiosinstance.get<ICategory[]>("/categories").then((res) =>
+      setCategories(res.data)
+    );
   }, []);
   return (
     <div>

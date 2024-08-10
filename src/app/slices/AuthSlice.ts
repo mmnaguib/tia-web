@@ -5,7 +5,7 @@ import actAuthRegister from "../act/Auth/actRegister";
 
 const initialState: IAuthState = {
   user: null,
-  accessToken: null,
+  jwt: null,
   loading: "idle",
   error: null,
 };
@@ -20,7 +20,7 @@ const AuthSlice = createSlice({
     },
     authLogout: (state) => {
       state.user = null;
-      state.accessToken = null;
+      state.jwt = null;
     },
   },
   extraReducers: (builder) => {
@@ -31,7 +31,7 @@ const AuthSlice = createSlice({
       actAuthLogin.fulfilled,
       (state, action: PayloadAction<TLoginResponse>) => {
         (state.loading = "succeed"), (state.user = action.payload.user);
-        state.accessToken = action.payload.accessToken;
+        state.jwt = action.payload.jwt;
       }
     );
     builder.addCase(

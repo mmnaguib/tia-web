@@ -12,22 +12,87 @@ import Register from "../pages/Auth/Register";
 import Products from "../pages/Products/Products";
 import SingleProduct from "../pages/Products/SingleProduct";
 import Cart from "../pages/Cart/Cart";
-import Admin from "../Admin/Admin";
+import ProtectedRoute from "../components/ProtectedRoutes";
+import AdminLayout from "../pages/Admin/AdminLayout";
+import Dashboard from "../pages/Admin/Dashboard";
+import NotFoundPage from "../pages/NotFoundPage";
 
-const router = createBrowserRouter(
+const isAllowed = false; // Change this logic based on your authentication status
+
+export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="admin" element={<Admin />} />
-      <Route path="home" element={<Home />} />
-      <Route path="products" element={<Products />} />
-      <Route path="products/:id" element={<SingleProduct />} />
-      <Route path="cart" element={<Cart />} />
-      <Route path="categories" element={<Categories />} />
-      <Route path="contact" element={<Contact />} />
-    </Route>
+    <>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route
+          path="login"
+          element={
+            <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="contact"
+          element={
+            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+              <Contact />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="products"
+          element={
+            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="products/:id"
+          element={
+            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+              <SingleProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="cart"
+          element={
+            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="categories"
+          element={
+            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+              <Categories />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
+    </>
   )
 );
-
-export default router;

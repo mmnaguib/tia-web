@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import ToggleLang from "../ToggleLang";
 import ToggleTheme from "../ToggleTheme";
 import { UseAppSelector } from "../../app/hooks";
+const isAllowed = true;
 
 const Navbar = () => {
   const { items } = UseAppSelector((state) => state.cart);
@@ -14,7 +15,7 @@ const Navbar = () => {
       <div className="middle">
         <ul className="links">
           <li>
-            <NavLink to="/home">{t("home")}</NavLink>
+            <NavLink to="/">{t("home")}</NavLink>
           </li>
           <li>
             <NavLink to="/admin">{t("admin")}</NavLink>
@@ -31,7 +32,15 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="left">
-        <i className="fa fa-user"></i>
+        {isAllowed ? (
+          <>
+            <NavLink to="/login">{t("login")}</NavLink>
+            <NavLink to="/register">{t("register")}</NavLink>
+          </>
+        ) : (
+          <i className="fa fa-user"></i>
+        )}
+
         <ToggleTheme />
         <ToggleLang />
         <Link to="/cart" className="shoppingCartDiv">

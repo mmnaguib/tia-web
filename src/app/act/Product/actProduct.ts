@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IProduct, TRejected } from "../../../interfaces";
-import axios from "axios";
 import axiosErrorHandler from "../../../utils/axiosErrorHandler";
+import Axiosinstance from "../../../config/axiosInstanse";
 
 const actProduct = createAsyncThunk<
   IProduct,
@@ -10,9 +10,7 @@ const actProduct = createAsyncThunk<
 >("product/actProduct", async (id: number | string | undefined, thunk) => {
   const { rejectWithValue } = thunk;
   try {
-    const res = await axios.get<IProduct>(
-      `http://localhost:3005/products/${id}`
-    );
+    const res = await Axiosinstance.get<IProduct>(`/products/${id}`);
     return res.data;
   } catch (error) {
     return rejectWithValue(axiosErrorHandler(error));

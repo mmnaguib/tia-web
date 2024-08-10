@@ -5,6 +5,7 @@ import "./index.scss";
 import { Provider } from "react-redux";
 import store from "./app/store.ts";
 import "./i18n.ts";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

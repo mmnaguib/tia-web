@@ -40,31 +40,36 @@ export interface ILoginFormData {
 export interface IRegisterFormData {
   email: string;
   password: string;
+  confirmpassword: string;
   firstname: string;
   lastname: string;
   address: string;
   phone: string;
+  image?: File;
 }
 
 export interface IUser {
   id: string | number;
+  email: string;
   password: string;
   firstname: string;
   lastname: string;
   address: string;
   phone: string;
+  image?: File;
+  isAdmin?: boolean;
 }
 
 export interface IAuthState {
   user: IUser | null;
-  accessToken: string | null;
+  jwt: string | null;
   loading: "idle" | "pending" | "succeed" | "failed";
   error: string | null;
 }
 
 export type TLoginResponse = {
   user: IUser | null;
-  accessToken: string | null;
+  jwt: string | null;
 };
 
 export type TRejected = {

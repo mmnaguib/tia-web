@@ -8,9 +8,10 @@ const initialState: IProductsState = {
   loading: "idle",
   error: null,
   product: {
+    id: 0,
     title: "",
     description: "",
-    price: "",
+    price: 0,
     quantity: 0,
     brand: "",
     category: {

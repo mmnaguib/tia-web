@@ -6,11 +6,13 @@ import { Provider } from "react-redux";
 import store from "./app/store.ts";
 import "./i18n.ts";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
+      <Toaster />
     </Provider>
   </React.StrictMode>
 );

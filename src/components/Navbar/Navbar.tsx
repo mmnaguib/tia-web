@@ -3,12 +3,15 @@ import "./index.scss";
 import { useTranslation } from "react-i18next";
 import ToggleLang from "../ToggleLang";
 import ToggleTheme from "../ToggleTheme";
-import { UseAppSelector } from "../../app/hooks";
-const isAllowed = true;
+import { UseAppDispatch, UseAppSelector } from "../../app/hooks";
+import { authLogout } from "../../app/slices/AuthSlice";
 
 const Navbar = () => {
   const { items } = UseAppSelector((state) => state.cart);
   const { t } = useTranslation();
+  const dispatch = UseAppDispatch();
+  const isAllowed = localStorage.getItem("token") ? true : false;
+  console.log(isAllowed);
   return (
     <div className="navbar">
       <div className="right">{t("tia")}</div>
@@ -32,13 +35,13 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="left">
-        {isAllowed ? (
+        {!isAllowed ? (
           <>
             <NavLink to="/login">{t("login")}</NavLink>
             <NavLink to="/register">{t("register")}</NavLink>
           </>
         ) : (
-          <i className="fa fa-user"></i>
+          <i className="fa fa-user" onClick={() => dispatch(authLogout())}></i>
         )}
 
         <ToggleTheme />

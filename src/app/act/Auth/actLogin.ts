@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { ILoginFormData, TLoginResponse, TRejected } from "../../../interfaces";
 import axiosErrorHandler from "../../../utils/axiosErrorHandler";
+import Axiosinstance from "../../../config/axiosInstanse";
 
 const actAuthLogin = createAsyncThunk<
   TLoginResponse,
@@ -10,7 +10,7 @@ const actAuthLogin = createAsyncThunk<
 >("auth/actAuthLogin", async (formData: ILoginFormData, thunk) => {
   const { rejectWithValue } = thunk;
   try {
-    const res = await axios.post<TLoginResponse>("/login", formData);
+    const res = await Axiosinstance.post<TLoginResponse>("/login", formData);
     return res.data;
   } catch (error) {
     return rejectWithValue(axiosErrorHandler(error));

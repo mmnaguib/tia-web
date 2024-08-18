@@ -2,15 +2,20 @@ import { useTranslation } from "react-i18next";
 import "./auth.scss";
 import ToggleLang from "../../components/ToggleLang";
 import ToggleTheme from "../../components/ToggleTheme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "./validation";
 import { ILoginFormData } from "../../interfaces";
 import InputErrorMessage from "../../components/InputErrorMessage";
+import { UseAppDispatch } from "../../app/hooks";
+import actAuthLogin from "../../app/act/Auth/actLogin";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { t } = useTranslation();
+  const dispatch = UseAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +23,14 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-  const onSubmit = (data: ILoginFormData) => console.log(data);
+  const onSubmit = (data: ILoginFormData) => {
+    dispatch(actAuthLogin(data))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+        toast.success("Welcome, You Are Successfully Login !");
+      });
+  };
   return (
     <>
       <div className="langATheme">

@@ -40,12 +40,12 @@ export interface ILoginFormData {
 export interface IRegisterFormData {
   email: string;
   password: string;
-  confirmpassword: string;
   firstname: string;
   lastname: string;
   address: string;
   phone: string;
-  image?: File;
+  image: FileList;
+  username?: string;
 }
 
 export interface IUser {
@@ -62,14 +62,14 @@ export interface IUser {
 
 export interface IAuthState {
   user: IUser | null;
-  jwt: string | null;
+  token: string | null;
   loading: "idle" | "pending" | "succeed" | "failed";
   error: string | null;
 }
 
 export type TLoginResponse = {
   user: IUser | null;
-  jwt: string | null;
+  token: string | null;
 };
 
 export type TRejected = {

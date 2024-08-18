@@ -2,15 +2,23 @@ import { useTranslation } from "react-i18next";
 import ToggleLang from "../../components/ToggleLang";
 import ToggleTheme from "../../components/ToggleTheme";
 import "./auth.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IRegisterFormData } from "../../interfaces";
 import { registerSchema } from "./validation";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 import InputErrorMessage from "../../components/InputErrorMessage";
+import { UseAppDispatch, UseAppSelector } from "../../app/hooks";
+import actAuthRegister from "../../app/act/Auth/actRegister";
+import toast from "react-hot-toast";
+import ErrorMsg from "../../components/ErrorMsg";
+
 const Register = () => {
   const { t } = useTranslation();
+  const dispatch = UseAppDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = UseAppSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -18,7 +26,26 @@ const Register = () => {
   } = useForm<IRegisterFormData>({
     resolver: yupResolver(registerSchema),
   });
-  const onSubmit = (data: IRegisterFormData) => console.log(data);
+  const onSubmit = (data: IRegisterFormData) => {
+    try {
+      const formData = new FormData();
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      formData.append("firstname", data.firstname);
+      formData.append("lastname", data.lastname);
+      formData.append("phone", data.phone);
+      formData.append("address", data.address);
+      formData.append("image", data.image[0]);
+      dispatch(actAuthRegister(formData))
+        .unwrap()
+        .then(() => {
+          toast.success(t("registrationSuccess"));
+          navigate("/login");
+        });
+    } catch (err) {
+      console.log("err message" + err);
+    }
+  };
   return (
     <>
       <div className="langATheme">
@@ -53,23 +80,10 @@ const Register = () => {
                 className="formInput"
                 id="password"
                 {...register("password")}
+                autoComplete="new-password"
               />
               {errors["password"] && (
                 <InputErrorMessage msg={errors["password"].message} />
-              )}
-            </Col>
-            <Col md="6">
-              <label className="formLabel" htmlFor="confirmpasswords">
-                {t("confirmpassword")}:
-              </label>
-              <input
-                type="password"
-                className="formInput"
-                id="confirmpassword"
-                {...register("confirmpassword")}
-              />
-              {errors["confirmpassword"] && (
-                <InputErrorMessage msg={errors["confirmpassword"].message} />
               )}
             </Col>
             <Col md="6">
@@ -129,7 +143,7 @@ const Register = () => {
               )}
             </Col>
             <Col md="6">
-              <label className="formLabel" htmlFor="phone">
+              <label className="formLabel" htmlFor="image">
                 {t("image")}:
               </label>
               <input
@@ -137,12 +151,16 @@ const Register = () => {
                 className=""
                 id="image"
                 accept=".jpg, .jpeg, .png"
+                {...register("image")}
               />
+              {errors["image"] && (
+                <InputErrorMessage msg={errors["image"].message} />
+              )}
             </Col>
           </Row>
           <div className="btnContent">
             <button className="formBtn" type="submit">
-              {t("save")}
+              {loading === "pending" ? <Spinner /> : t("save")}
             </button>
           </div>
           <div className="haveAcc">
@@ -150,6 +168,8 @@ const Register = () => {
             <Link to="/">{t("login")}</Link>
           </div>
         </form>
+
+        {error && <ErrorMsg error={error} />}
       </div>
     </>
   );

@@ -16,13 +16,14 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import AdminLayout from "../pages/Admin/AdminLayout";
 import Dashboard from "../pages/Admin/Dashboard";
 import NotFoundPage from "../pages/NotFoundPage";
+import ErrorMsg from "../components/ErrorMsg";
 
 const isAllowed = false; // Change this logic based on your authentication status
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<RootLayout />}>
+      <Route path="/" element={<RootLayout />} errorElement={<ErrorMsg />}>
         <Route index element={<Home />} />
         <Route
           path="login"

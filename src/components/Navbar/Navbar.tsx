@@ -28,9 +28,6 @@ const Navbar = () => {
             <NavLink to="/products">{t("products")}</NavLink>
           </li>
           <li>
-            <NavLink to="/categories">{t("categories")}</NavLink>
-          </li>
-          <li>
             <NavLink to="/contact">{t("contact")}</NavLink>
           </li>
         </ul>

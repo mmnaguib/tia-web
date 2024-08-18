@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import RootLayout from "../pages/RootLayout";
 import Home from "../pages/Home/Home";
-import Categories from "../pages/Categories/Categories";
+// import Categories from "../pages/Categories/Categories";
 import Login from "../pages/Auth/Login";
 import Contact from "../pages/Contact/Contact";
 import Register from "../pages/Auth/Register";
@@ -73,14 +73,14 @@ export const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="categories"
           element={
             <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
               <Categories />
             </ProtectedRoute>
           }
-        />
+        /> */}
       </Route>
 
       <Route

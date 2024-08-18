@@ -14,9 +14,9 @@ const Categories = () => {
     );
   }, []);
   return (
-    <div>
+    <div className="categoriesContent">
       {categories.map((category) => (
-        <div>{category.name}</div>
+        <div className="category">{category.name}</div>
       ))}
     </div>
   );

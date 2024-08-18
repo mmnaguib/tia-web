@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 
 interface IProps {
-  error: string | undefined;
+  error?: string | undefined;
 }
 
 const ErrorMsg = ({ error }: IProps) => {

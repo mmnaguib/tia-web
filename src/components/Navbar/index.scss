@@ -3,8 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 10px !important;
 
   .right {
     font-size: 25px;
@@ -53,13 +52,13 @@
         font-weight: bold;
       }
     }
-  }
   .loginBtns{
-    background: #f00;
+    background: #c1c1c1;
     padding: 3px 7px;
-    color: #fff;
     border-radius: 8px;
     text-decoration: none;
     margin: 0 10px;
+    color: #000;
+  }
   }
 }

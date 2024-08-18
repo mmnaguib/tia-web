@@ -22,6 +22,7 @@ const AuthSlice = createSlice({
       state.user = null;
       state.token = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
   },
   extraReducers: (builder) => {
@@ -34,6 +35,7 @@ const AuthSlice = createSlice({
         (state.loading = "succeed"), (state.user = action.payload.user);
         state.token = action.payload.token;
         localStorage.setItem("token", state.token || "");
+        localStorage.setItem("user", JSON.stringify(state.user));
       }
     );
     builder.addCase(

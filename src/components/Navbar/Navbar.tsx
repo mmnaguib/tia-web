@@ -10,7 +10,8 @@ const Navbar = () => {
   const { items } = UseAppSelector((state) => state.cart);
   const { t } = useTranslation();
   const dispatch = UseAppDispatch();
-  const isAllowed = localStorage.getItem("token") ? true : false;
+  const { token } = UseAppSelector((state) => state.auth);
+  const isAllowed = token ? true : false;
   console.log(isAllowed);
   return (
     <div className="navbar">
@@ -37,8 +38,12 @@ const Navbar = () => {
       <div className="left">
         {!isAllowed ? (
           <>
-            <NavLink to="/login">{t("login")}</NavLink>
-            <NavLink to="/register">{t("register")}</NavLink>
+            <NavLink className="loginBtns" to="/login">
+              {t("login")}
+            </NavLink>
+            <NavLink className="loginBtns" to="/register">
+              {t("register")}
+            </NavLink>
           </>
         ) : (
           <i className="fa fa-user" onClick={() => dispatch(authLogout())}></i>

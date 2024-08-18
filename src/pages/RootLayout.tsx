@@ -12,7 +12,7 @@ const RootLayout = () => {
     <>
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
       <Outlet />
-      <Footer />
+      {!hideNavbarPaths.includes(location.pathname) && <Footer />}
     </>
   );
 };

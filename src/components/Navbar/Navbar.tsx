@@ -12,7 +12,6 @@ const Navbar = () => {
   const dispatch = UseAppDispatch();
   const { token } = UseAppSelector((state) => state.auth);
   const isAllowed = token ? true : false;
-  console.log(isAllowed);
   return (
     <div className="navbar">
       <div className="right">{t("tia")}</div>

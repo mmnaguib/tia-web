@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct, IProductsState } from "../../interfaces";
 import actProducts from "../act/Product/actProducts";
 import actProduct from "../act/Product/actProduct";
+import actProductsCategory from "../act/Product/actProductsCategory";
 
 const initialState: IProductsState = {
   products: [],
@@ -64,6 +65,24 @@ const ProductSlice = createSlice({
     );
     builder.addCase(
       actProduct.rejected,
+      (state, action: PayloadAction<string | undefined>) => {
+        state.loading = "failed";
+        state.error = action.payload || "An unexpected error occurred";
+      }
+    );
+
+    builder.addCase(actProductsCategory.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(
+      actProductsCategory.fulfilled,
+      (state, action: PayloadAction<IProduct[]>) => {
+        state.loading = "succeed";
+        state.products = action.payload;
+      }
+    );
+    builder.addCase(
+      actProductsCategory.rejected,
       (state, action: PayloadAction<string | undefined>) => {
         state.loading = "failed";
         state.error = action.payload || "An unexpected error occurred";

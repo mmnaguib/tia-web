@@ -3,9 +3,11 @@ import { IAuthState, TLoginResponse } from "../../interfaces";
 import actAuthLogin from "../act/Auth/actLogin";
 import actAuthRegister from "../act/Auth/actRegister";
 
+const storedUser = localStorage.getItem("user");
+const storedToken = localStorage.getItem("token");
 const initialState: IAuthState = {
-  user: null,
-  token: null,
+  user: storedToken ? (storedUser ? JSON.parse(storedUser) : null) : null,
+  token: storedToken ? storedToken : null,
   loading: "idle",
   error: null,
 };

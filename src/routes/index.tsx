@@ -17,83 +17,88 @@ import AdminLayout from "../pages/Admin/AdminLayout";
 import Dashboard from "../pages/Admin/Dashboard";
 import NotFoundPage from "../pages/NotFoundPage";
 import ErrorMsg from "../components/ErrorMsg";
+import { UseAppSelector } from "../app/hooks";
 
-const isAllowed = false; // Change this logic based on your authentication status
+const AppRoute = () => {
+  const { token } = UseAppSelector((state) => state.auth);
+  const isAllowed = token ? true : false;
+  return createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path="/" element={<RootLayout />} errorElement={<ErrorMsg />}>
+          <Route index element={<Home />} />
+          <Route
+            path="login"
+            element={
+              <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="contact"
+            element={
+              <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+                <Contact />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="products/:id"
+            element={
+              <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+                <SingleProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="cart"
+            element={
+              <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+          {/* <Route
+            path="categories"
+            element={
+              <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
+                <Categories />
+              </ProtectedRoute>
+            }
+          /> */}
+        </Route>
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path="/" element={<RootLayout />} errorElement={<ErrorMsg />}>
-        <Route index element={<Home />} />
         <Route
-          path="login"
-          element={
-            <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="register"
-          element={
-            <ProtectedRoute isAllowed={!isAllowed} redirectPath="/login">
-              <Register />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="contact"
+          path="/admin"
           element={
             <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-              <Contact />
+              <AdminLayout />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="products"
-          element={
-            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-              <Products />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="products/:id"
-          element={
-            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-              <SingleProduct />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="cart"
-          element={
-            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        {/* <Route
-          path="categories"
-          element={
-            <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-              <Categories />
-            </ProtectedRoute>
-          }
-        /> */}
-      </Route>
+        >
+          <Route index element={<Dashboard />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </>
+    )
+  );
+};
 
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute isAllowed={isAllowed} redirectPath="/login">
-            <AdminLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<Dashboard />} />
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </>
-  )
-);
+export default AppRoute;

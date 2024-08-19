@@ -1,7 +1,6 @@
 export interface ICategory {
   id?: string | undefined;
   name: string;
-  description: string;
   image?: string;
 }
 

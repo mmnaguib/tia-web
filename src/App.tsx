@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import loadLanguageStyles from "./utils/loadLanguageStyles";
 import { useEffect } from "react";
 import "./assets/styles/publicStyle.scss";
-import { router } from "./routes";
+import AppRoute from "./routes";
 const App = () => {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
@@ -13,7 +13,7 @@ const App = () => {
   }, [currentLanguage]);
   return (
     <div className={`app-container`}>
-      <RouterProvider router={router} />
+      <RouterProvider router={AppRoute()} />
     </div>
   );
 };

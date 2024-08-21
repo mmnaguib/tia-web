@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import actProductsCategory from "../../app/act/Product/actProductsCategory";
 import { UseAppDispatch } from "../../app/hooks";
 import Axiosinstance from "../../config/axiosInstanse";
+import actProducts from "../../app/act/Product/actProducts";
 
 export interface ICategory {
   name: string;
@@ -36,8 +37,19 @@ const Categories = () => {
     [dispatch]
   );
 
+  const showAllProducts = useCallback(async () => {
+    try {
+      dispatch(actProducts());
+    } catch (error) {
+      console.error("Error fetching category products:", error);
+    }
+  }, [dispatch]);
+
   return (
     <div className="categoriesContent">
+      <div className="category" onClick={showAllProducts}>
+        الكل
+      </div>
       {categories.map((category) => (
         <div
           key={category.name}

@@ -1,10 +1,16 @@
 import { Alert } from "react-bootstrap";
-import { UseAppSelector } from "../../app/hooks";
+import { UseAppDispatch, UseAppSelector } from "../../app/hooks";
 import Categories from "../Categories/Categories";
 import ProductList from "../Products/ProductList";
 import "./home.scss";
+import { useEffect } from "react";
+import actProducts from "../../app/act/Product/actProducts";
 const Home = () => {
   const { products } = UseAppSelector((state) => state.product);
+  const dispatch = UseAppDispatch();
+  useEffect(() => {
+    dispatch(actProducts());
+  }, [dispatch]);
   return (
     <>
       <Categories />

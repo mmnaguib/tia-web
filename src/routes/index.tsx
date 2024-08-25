@@ -18,6 +18,8 @@ import Dashboard from "../pages/Admin/Dashboard";
 import NotFoundPage from "../pages/NotFoundPage";
 import ErrorMsg from "../components/ErrorMsg";
 import { UseAppSelector } from "../app/hooks";
+import AddCategory from "../pages/Admin/AddCategory";
+import AddProduct from "../pages/Admin/AddProduct";
 
 const AppRoute = () => {
   const { token } = UseAppSelector((state) => state.auth);
@@ -94,6 +96,8 @@ const AppRoute = () => {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="addCategory" element={<AddCategory />} />
+          <Route path="addProduct" element={<AddProduct />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </>

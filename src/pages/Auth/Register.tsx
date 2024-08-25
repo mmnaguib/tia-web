@@ -36,16 +36,20 @@ const Register = () => {
       formData.append("phone", data.phone);
       formData.append("address", data.address);
       formData.append("image", data.image[0]);
+      console.log(data.image[0]);
       dispatch(actAuthRegister(formData))
-        .unwrap()
         .then(() => {
-          toast.success(t("registrationSuccess"));
           navigate("/login");
+          toast.success(t("registrationSuccess"));
+        })
+        .catch((error) => {
+          console.error("Error during registration:", error);
         });
     } catch (err) {
-      console.log("err message" + err);
+      console.log("Error message: " + err);
     }
   };
+
   return (
     <>
       <div className="langATheme">
@@ -165,7 +169,7 @@ const Register = () => {
           </div>
           <div className="haveAcc">
             <span>{t("doHaveAccount")}</span>&nbsp;
-            <Link to="/">{t("login")}</Link>
+            <Link to="/login">{t("login")}</Link>
           </div>
         </form>
 

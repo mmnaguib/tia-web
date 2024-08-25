@@ -1,0 +1,18 @@
+.admin-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  align-items: center;
+  .card {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.adminSidebar {
+  position: fixed;
+  width: 250px;
+  background: #000;
+  color: #fff;
+  height: 100vh;
+}

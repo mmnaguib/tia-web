@@ -20,10 +20,12 @@ import ErrorMsg from "../components/ErrorMsg";
 import { UseAppSelector } from "../app/hooks";
 import AddCategory from "../pages/Admin/AddCategory";
 import AddProduct from "../pages/Admin/AddProduct";
+import ProductsTable from "../pages/Admin/Tables/ProductsTable";
+import CategoriesTable from "../pages/Admin/Tables/CategoriesTable";
 
 const AppRoute = () => {
   const { token } = UseAppSelector((state) => state.auth);
-  const isAllowed = token ? true : false;
+  const isAllowed = true;
   return createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -96,8 +98,10 @@ const AppRoute = () => {
           }
         >
           <Route index element={<Dashboard />} />
-          <Route path="addCategory" element={<AddCategory />} />
-          <Route path="addProduct" element={<AddProduct />} />
+          <Route path="categories" element={<CategoriesTable />} />
+          <Route path="categories/add-category" element={<AddCategory />} />
+          <Route path="products" element={<ProductsTable />} />
+          <Route path="products/add-product" element={<AddProduct />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </>

@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import actProductsCategory from "../../app/act/Product/actProductsCategory";
 import { UseAppDispatch } from "../../app/hooks";
-import Axiosinstance from "../../config/axiosInstanse";
 import actProducts from "../../app/act/Product/actProducts";
+import useCategories from "../../utils/categories";
 
 export interface ICategory {
   name: string;
@@ -10,21 +10,8 @@ export interface ICategory {
 }
 
 const Categories = () => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const { categories } = useCategories();
   const dispatch = UseAppDispatch();
-
-  const fetchCategories = async () => {
-    try {
-      const res = await Axiosinstance.get<ICategory[]>("/categories");
-      setCategories(res.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const categoryProductsHandler = useCallback(
     async (categoryName: string) => {

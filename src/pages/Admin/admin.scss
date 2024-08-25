@@ -15,4 +15,31 @@
   background: #000;
   color: #fff;
   height: 100vh;
+
+  a{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #fff;
+    width: 80%;
+    margin: auto;
+    position: relative;
+    
+    &:hover{
+      color: #f00;
+    }
+    &.active{
+      color: #f00;
+    }
+    i{
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  }
 }

@@ -85,3 +85,25 @@
     }
   }
 }
+
+.addProductDiv {
+  gap: 25px 15px;
+  padding: 15px;
+  box-shadow: 0 0 5px 5px #eaeaea;
+  .form-group{
+   width: 32%; 
+  }
+  
+}
+.inputForm{
+  padding: 10px;
+    width: 100%;
+    margin: 0 5px 0 0px;
+    border-radius: 8px;
+    height: 35px;
+    border: 1px solid #ccc;
+    font-size: 20px;
+    &:focus {
+      outline: none;
+    }
+}

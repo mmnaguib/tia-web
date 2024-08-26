@@ -16,10 +16,10 @@ export interface IProduct {
     image?: string;
   };
   inStock: number;
-  images: string[];
+  images: FileList[];
   colors: string[];
-  sizes?: string[];
-  rating: {
+  sizes?: string[] | undefined;
+  rating?: {
     rate: number;
     count: number;
   };

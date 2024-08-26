@@ -1,23 +1,31 @@
 import { Link } from "react-router-dom";
+import { UseAppSelector } from "../../../app/hooks";
 
 const ProductsTable = () => {
+  const { products } = UseAppSelector((state) => state.product);
   return (
-    <div>
-      <Link to="add-product">Add Product</Link>
-      <table>
+    <div className="adminTable">
+      <Link className="btn btn-primary addBtn" to="add-product">
+        Add Product
+      </Link>
+      <table className="productName">
         <thead>
           <tr>
-            <th>3</th>
-            <th>2</th>
-            <th>1</th>
+            <th>م</th>
+            <th>القسم</th>
+            <th>الصورة</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>3</td>
-            <td>2</td>
-            <td>1</td>
-          </tr>
+          {products.map((product, index) => (
+            <tr key={product.id}>
+              <td>{index + 1}</td>
+              <td>{product.title}</td>
+              <td>
+                <img src={product.images[0]} alt="" />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

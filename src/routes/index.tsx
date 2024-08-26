@@ -25,7 +25,7 @@ import CategoriesTable from "../pages/Admin/Tables/CategoriesTable";
 
 const AppRoute = () => {
   const { token } = UseAppSelector((state) => state.auth);
-  const isAllowed = true;
+  const isAllowed = token ? true : false;
   return createBrowserRouter(
     createRoutesFromElements(
       <>

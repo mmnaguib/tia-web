@@ -1,11 +1,11 @@
 export interface ICategory {
-  id?: string | undefined;
+  _id?: string | undefined;
   name: string;
-  image?: string;
+  image: FileList;
 }
 
 export interface IProduct {
-  id: number;
+  _id: number;
   title: string;
   description: string;
   price: number;
@@ -48,7 +48,7 @@ export interface IRegisterFormData {
 }
 
 export interface IUser {
-  id: string | number;
+  _id: string | number;
   email: string;
   password: string;
   firstname: string;

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import actProductsCategory from "../../app/act/Product/actProductsCategory";
 import { UseAppDispatch } from "../../app/hooks";
 import actProducts from "../../app/act/Product/actProducts";
-import useCategories from "../../utils/categories";
+import useCategories from "../../services/getAllCategories";
 
 export interface ICategory {
   name: string;

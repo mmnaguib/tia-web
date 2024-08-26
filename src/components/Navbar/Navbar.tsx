@@ -10,7 +10,7 @@ const Navbar = () => {
   const { items } = UseAppSelector((state) => state.cart);
   const { t } = useTranslation();
   const dispatch = UseAppDispatch();
-  const { token } = UseAppSelector((state) => state.auth);
+  const { token, user } = UseAppSelector((state) => state.auth);
   const isAllowed = token ? true : false;
   return (
     <div className="navbar">
@@ -20,9 +20,11 @@ const Navbar = () => {
           <li>
             <NavLink to="/">{t("home")}</NavLink>
           </li>
-          <li>
-            <NavLink to="/admin">{t("admin")}</NavLink>
-          </li>
+          {user?.isAdmin && (
+            <li>
+              <NavLink to="/admin">{t("admin")}</NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/products">{t("products")}</NavLink>
           </li>

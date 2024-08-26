@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import Axiosinstance from "../config/axiosInstanse";
-
-export interface ICategory {
-  name: string;
-  image?: string;
-}
+import { ICategory } from "../interfaces";
 
 const useCategories = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);

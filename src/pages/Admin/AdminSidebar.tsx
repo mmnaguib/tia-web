@@ -1,9 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { UseAppSelector } from "../../app/hooks";
 
 const AdminSidebar = () => {
+  const { user } = UseAppSelector((state) => state.auth);
   return (
     <div className="adminSidebar">
-      <div className="admin-profile">profile</div>
+      <div className="admin-profile">
+        {user?.firstname + " " + user?.lastname}
+      </div>
       <hr />
       <div className="admin-links">
         <NavLink to="/admin" end className="admin-link">

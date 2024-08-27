@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
-import useCategories from "../../services/getAllCategories";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IProduct } from "../../interfaces";
 import { onSubmitProduct } from "../../services/addProduct";
@@ -9,31 +7,47 @@ import { useNavigate } from "react-router-dom";
 import { UseAppSelector } from "../../app/hooks";
 import InputErrorMessage from "../../components/InputErrorMessage";
 import "./admin.scss";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
+import { colors, sizes } from "../../data";
+import useCategories from "../../services/getAllCategories";
+import Swal from "sweetalert2";
+
 const AddProduct = () => {
   const { t } = useTranslation();
-  const { categories } = useCategories();
   const navigate = useNavigate();
   const { token } = UseAppSelector((state) => state.auth);
+  const { categories } = useCategories();
 
   const addProductSchema = yup.object().shape({
     title: yup.string().required(t("Product Name is required")),
     description: yup.string().required(t("Product Image is required")),
     price: yup.number().required(t("Product price is required")),
     brand: yup.string().required(t("Product brand is required")),
-    inStock: yup.number().required(t("Product qunatity is required")),
-    colors: yup.string().required(t("Product colors is required")),
-    category: yup.string().required(t("Product is required")),
-    sizes: yup.string().notRequired().optional(),
+    inStock: yup.number().required(t("Product quantity is required")),
+    colors: yup
+      .array()
+      .of(yup.string())
+      .required(t("Product colors are required")),
+    category: yup.string().required(t("Product category is required")),
+    sizes: yup.array().of(yup.string()).optional(),
     images: yup.mixed().required(t("Product Image is required")),
   });
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IProduct>({
     resolver: yupResolver(addProductSchema),
+    defaultValues: {
+      colors: [], // Default to empty array
+      sizes: [], // Default to empty array
+      category: "", // Default to empty string
+    },
   });
+
   const onSubmit = (data: IProduct) => {
     const formData = new FormData();
     formData.append("title", data.title);
@@ -41,19 +55,19 @@ const AddProduct = () => {
     formData.append("price", data.price.toString());
     formData.append("inStock", data.inStock.toString());
     formData.append("brand", data.brand);
-    formData.append("colors", data.colors[0]);
-    formData.append("size", data.sizes?.[0]?.toString() || "");
-    formData.append("category", data.category.name);
-    if (data.images && data.images[0]) {
-      formData.append("images", data.images[0][0]);
-    }
+    formData.append("colors", data.colors.join(","));
+    formData.append("sizes", data.sizes ? data.sizes.join(",") : "");
+    formData.append("category", data.category);
 
     onSubmitProduct({
       data: formData,
       token,
       navigate,
     });
+
+    Swal.fire("Added!", "Your category has been added.", "success");
   };
+
   return (
     <div>
       <h1>{t("AddProduct")}</h1>
@@ -133,41 +147,82 @@ const AddProduct = () => {
 
             {errors.images && <InputErrorMessage msg={errors.images.message} />}
           </div>
+
           <div className="form-group">
-            <label className="" htmlFor="productColors">
-              {t("productColors")}
-            </label>
-            <input
-              type="text"
-              id="productColors"
-              className="inputForm"
-              {...register("colors")}
+            <label htmlFor="productColors">{t("productColors")}</label>
+            <Controller
+              name="colors"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  id="productColors"
+                  options={colors}
+                  isMulti
+                  onChange={(selectedOptions) =>
+                    field.onChange(
+                      (
+                        (selectedOptions as Array<{
+                          value: string;
+                          label: string;
+                        }>) || []
+                      ).map((option) => option.value)
+                    )
+                  }
+                  value={colors.filter((option) =>
+                    field.value.includes(option.value)
+                  )}
+                />
+              )}
             />
             {errors.colors && <InputErrorMessage msg={errors.colors.message} />}
           </div>
+
           <div className="form-group">
-            <label className="" htmlFor="productSizes">
-              {t("productSizes")}
-            </label>
-            <input
-              type="text"
-              id="productSizes"
-              className="inputForm"
-              {...register("sizes")}
+            <label htmlFor="productSizes">{t("productSizes")}</label>
+            <Controller
+              name="sizes"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  id="productSizes"
+                  options={sizes}
+                  isMulti
+                  onChange={(selectedOptions) =>
+                    field.onChange(
+                      (
+                        (selectedOptions as Array<{
+                          value: string;
+                          label: string;
+                        }>) || []
+                      ).map((option) => option.value)
+                    )
+                  }
+                  value={sizes.filter((option) =>
+                    field.value
+                      ? (field.value as string[]).includes(option.value)
+                      : false
+                  )}
+                />
+              )}
             />
             {errors.sizes && <InputErrorMessage msg={errors.sizes.message} />}
           </div>
+
           <div className="form-group">
-            <label className="" htmlFor="category">
-              {t("category")}
-            </label>
-            <select className="inputForm" {...register("category")}>
+            <label htmlFor="category">{t("category")}</label>
+            <select className="productCategory" {...register("category")}>
+              <option selected disabled>
+                select ...
+              </option>
               {categories.map((category) => (
-                <option>{category.name}</option>
+                <option value={category.name} key={category._id}>
+                  {category.name}
+                </option>
               ))}
             </select>
-            {errors.category?.name && (
-              <InputErrorMessage msg={errors.category.name.message} />
+            {errors.category && (
+              <InputErrorMessage msg={errors.category.message} />
             )}
           </div>
         </div>

@@ -1,3 +1,4 @@
+import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -8,13 +9,19 @@ import { UseAppSelector } from "../../app/hooks";
 import Modal from "../../components/Modal/Modal";
 import { onSubmitCategory } from "../../services/addCategory";
 import InputErrorMessage from "../../components/InputErrorMessage";
+import Swal from "sweetalert2";
 
 interface AddCategoryProps {
   isOpen: boolean;
   closeModal: () => void;
+  setCategories: React.Dispatch<React.SetStateAction<ICategory[]>>;
 }
 
-const AddCategory = ({ isOpen, closeModal }: AddCategoryProps) => {
+const AddCategory = ({
+  isOpen,
+  closeModal,
+  setCategories,
+}: AddCategoryProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { token } = UseAppSelector((state) => state.auth);
@@ -39,14 +46,20 @@ const AddCategory = ({ isOpen, closeModal }: AddCategoryProps) => {
       formData.append("image", data.image[0]);
     }
 
-    onSubmitCategory({
+    await onSubmitCategory({
       data: formData,
       token,
       navigate,
       closeModal,
     });
 
-    // window.location.reload();
+    // Update the categories state
+    setCategories((prevCategories) => [
+      ...prevCategories,
+      { ...data, _id: new Date().toISOString() }, // Example: adding new category
+    ]);
+
+    Swal.fire("Added!", "Your category has been added.", "success");
   };
 
   return (

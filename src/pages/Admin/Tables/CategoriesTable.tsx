@@ -11,17 +11,26 @@ import EditCategory from "../EditCategort";
 const CategoriesTable = () => {
   const navigate = useNavigate();
   const { token } = UseAppSelector((state) => state.auth);
-  const { categories } = useCategories(); // Ensure this hook is working and returning categories
+  const { categories, setCategories } = useCategories();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
 
   const openModal = () => setIsModalOpen(true);
-  const openEditModal = () => setIsEditModalOpen(true);
+  const openEditModal = (id: string) => {
+    setSelectedCategoryId(id);
+    setIsEditModalOpen(true);
+  };
 
   const closeModal = () => setIsModalOpen(false);
-  const closeEditModal = () => setIsEditModalOpen(false);
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedCategoryId(null);
+  };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (_id: string) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -34,8 +43,11 @@ const CategoriesTable = () => {
       });
 
       if (result.isConfirmed) {
-        await onDeleteCategory({ id, token, navigate });
-        window.location.reload();
+        await onDeleteCategory({ _id, token, navigate });
+        setCategories((prevCategories) =>
+          prevCategories.filter((category) => category._id !== _id)
+        );
+        Swal.fire("Deleted!", "Your category has been deleted.", "success");
       }
     } catch (error) {
       console.error("Error deleting category:", error);
@@ -84,18 +96,11 @@ const CategoriesTable = () => {
                   </button>
                   &nbsp; &nbsp;
                   <button
-                    onClick={() => openEditModal()}
-                    className="btn btn-info  btn-sm"
+                    onClick={() => openEditModal(String(category._id))}
+                    className="btn btn-info btn-sm"
                   >
                     <i className="fa fa-edit"></i>
                   </button>
-                  {isEditModalOpen && (
-                    <EditCategory
-                      _id={String(category._id)}
-                      isOpen={isEditModalOpen}
-                      closeEditModal={closeEditModal}
-                    />
-                  )}
                 </td>
               </tr>
             ))}
@@ -106,7 +111,20 @@ const CategoriesTable = () => {
       )}
 
       {isModalOpen && (
-        <AddCategory isOpen={isModalOpen} closeModal={closeModal} />
+        <AddCategory
+          setCategories={setCategories}
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+        />
+      )}
+
+      {isEditModalOpen && selectedCategoryId && (
+        <EditCategory
+          setCategories={setCategories}
+          _id={selectedCategoryId}
+          isOpen={isEditModalOpen}
+          closeEditModal={closeEditModal}
+        />
       )}
     </div>
   );

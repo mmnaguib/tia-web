@@ -5,20 +5,20 @@ import { ICategory } from "../interfaces";
 const useCategories = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
 
-  const fetchCategories = async () => {
-    try {
-      const res = await Axiosinstance.get<ICategory[]>("/categories");
-      setCategories(res.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await Axiosinstance.get("/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
     fetchCategories();
   }, []);
 
-  return { categories };
+  return { categories, setCategories };
 };
 
 export default useCategories;

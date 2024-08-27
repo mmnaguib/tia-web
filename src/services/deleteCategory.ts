@@ -2,18 +2,18 @@ import Axiosinstance from "../config/axiosInstanse";
 import toast from "react-hot-toast";
 
 interface OnDeleteParams {
-  id: string;
+  _id: string;
   token: string | null;
   navigate: (path: string) => void;
 }
 
 export const onDeleteCategory = async ({
-  id,
+  _id,
   token,
   navigate,
 }: OnDeleteParams) => {
   try {
-    await Axiosinstance.delete("/categories/" + id, {
+    await Axiosinstance.delete("/categories/" + _id, {
       headers: {
         token: `Bearer ${token}`,
       },

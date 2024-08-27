@@ -1,11 +1,11 @@
-import { UseAppSelector } from "../../app/hooks";
 import useCategories from "../../services/getAllCategories";
+import useProducts from "../../services/getAllProducts";
 import useUsers from "../../services/getAllUsers";
 
 const Dashboard = () => {
   // const {users} = UseAppSelector(state => state.auth)
-  const { products } = UseAppSelector((state) => state.product);
   const { categories } = useCategories();
+  const { products } = useProducts();
   const { users } = useUsers();
   return (
     <div className="admin-dashboard">

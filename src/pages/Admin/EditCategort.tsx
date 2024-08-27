@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import InputErrorMessage from "../../components/InputErrorMessage";
 import { useNavigate } from "react-router-dom";
 import { UseAppSelector } from "../../app/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICategory } from "../../interfaces";
 import Axiosinstance from "../../config/axiosInstanse";
 import { useForm } from "react-hook-form";
@@ -10,14 +10,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { onEditCategory } from "../../services/editCategory";
 import Modal from "../../components/Modal/Modal";
 import * as yup from "yup";
+import Swal from "sweetalert2";
 
 interface EditCategoryProps {
   isOpen: boolean;
   closeEditModal: () => void;
+  setCategories: React.Dispatch<React.SetStateAction<ICategory[]>>;
   _id: string;
 }
 
-const EditCategory = ({ isOpen, closeEditModal, _id }: EditCategoryProps) => {
+const EditCategory = ({
+  isOpen,
+  closeEditModal,
+  _id,
+  setCategories,
+}: EditCategoryProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { token } = UseAppSelector((state) => state.auth);
@@ -32,34 +39,30 @@ const EditCategory = ({ isOpen, closeEditModal, _id }: EditCategoryProps) => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
+    reset,
   } = useForm<ICategory>({
     resolver: yupResolver(editCategorySchema),
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await Axiosinstance.get(`/categories/${_id}`);
       setCategory(response.data);
+      // Reset the form with the fetched data
+      reset({
+        name: response.data.name,
+        image: undefined,
+      });
     } catch (err) {
       console.error("Error fetching category:", err);
     }
-  };
+  }, [_id, reset]);
 
   useEffect(() => {
     if (isOpen && _id) {
       fetchData();
     }
-  }, [isOpen, _id]);
-
-  useEffect(() => {
-    if (category) {
-      // Set values directly
-      setValue("name", category.name);
-      // Use `setValue` with care for file inputs
-      // setValue("image", category.image);
-    }
-  }, [category, setValue]);
+  }, [isOpen, _id, fetchData]);
 
   const onSubmit = async (data: ICategory) => {
     const formData = new FormData();
@@ -79,6 +82,15 @@ const EditCategory = ({ isOpen, closeEditModal, _id }: EditCategoryProps) => {
     } catch (error) {
       console.error("Error updating category:", error);
     }
+
+    setCategories((prevCategories) =>
+      prevCategories.map((category) =>
+        category._id === data._id
+          ? { ...category, name: data.name, image: data.image } // Ensure that image is handled correctly
+          : category
+      )
+    );
+    Swal.fire("Updated!", "Your category has been Updated.", "success");
   };
 
   return (

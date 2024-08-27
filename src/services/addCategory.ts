@@ -1,9 +1,10 @@
-// src/services/categoryService.ts
+// services/addCategory.ts
 
 import Axiosinstance from "../config/axiosInstanse";
 import toast from "react-hot-toast";
+import { ICategory } from "../interfaces";
 
-interface OnSubmitParams {
+interface OnSubmitCategoryParams {
   data: FormData;
   token: string | null;
   navigate: (path: string) => void;
@@ -15,19 +16,23 @@ export const onSubmitCategory = async ({
   token,
   navigate,
   closeModal,
-}: OnSubmitParams) => {
+}: OnSubmitCategoryParams): Promise<ICategory | null> => {
   try {
-    await Axiosinstance.post("/categories", data, {
+    const response = await Axiosinstance.post("/categories", data, {
       headers: {
-        "Content-Type": "multipart/form-data",
         token: `Bearer ${token}`,
       },
-    }).then(() => {
-      toast.success("Category is Added");
-      navigate("/admin/categories");
-      closeModal();
     });
+
+    toast.success("Category added successfully");
+    navigate("/admin/categories");
+    closeModal();
+
+    return response.data; // Return the new category
   } catch (error) {
     toast.error("Failed to add category");
+    console.error("Error adding category:", error);
+
+    return null;
   }
 };

@@ -5,16 +5,13 @@ export interface ICategory {
 }
 
 export interface IProduct {
-  _id: number;
+  _id: string;
   title: string;
   description: string;
   price: number;
   quantity?: number;
   brand: string;
-  category: {
-    name: string;
-    image?: string;
-  };
+  category: string;
   inStock: number;
   images: FileList[];
   colors: string[];

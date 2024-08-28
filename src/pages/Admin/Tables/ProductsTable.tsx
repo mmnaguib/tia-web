@@ -46,7 +46,13 @@ const ProductsTable = () => {
           <tr>
             <th>م</th>
             <th>المنتج</th>
-            <th>الصورة</th>
+            <th>السعر</th>
+            <th>المتاح</th>
+            <th>البراند</th>
+            <th>الالوان</th>
+            <th>الاحجام</th>
+            <th>القسم</th>
+            <th>الحركات</th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +60,33 @@ const ProductsTable = () => {
             <tr key={product._id}>
               <td>{index + 1}</td>
               <td>{product.title}</td>
+              <td>{product.price}</td>
+              <td>{product.inStock}</td>
+              <td>{product.brand}</td>
+              <td>
+                {product.colors.flatMap((color) =>
+                  color.split(",").map((c) => (
+                    <span
+                      key={c}
+                      style={{
+                        backgroundColor: `${c}`,
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        padding: "5px",
+                        color: "#fff",
+                      }}
+                    >
+                      {c}
+                    </span>
+                  ))
+                )}
+              </td>
+              <td>
+                {product.sizes?.flatMap((size) =>
+                  size.split(",").map((s) => <span key={s}>{s}</span>)
+                )}
+              </td>
+              <td>{product.category}</td>
               <td>
                 <button
                   onClick={() => handleDelete(product._id)}

@@ -13,7 +13,7 @@ export interface IProduct {
   brand: string;
   category: string;
   inStock: number;
-  images: FileList[];
+  images: FileList;
   colors: string[];
   sizes?: string[] | undefined;
   rating?: {

@@ -58,7 +58,11 @@ const AddProduct = () => {
     formData.append("colors", data.colors.join(","));
     formData.append("sizes", data.sizes ? data.sizes.join(",") : "");
     formData.append("category", data.category);
-
+    if (data.images && data.images.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        formData.append("images", file);
+      });
+    }
     onSubmitProduct({
       data: formData,
       token,
@@ -143,7 +147,12 @@ const AddProduct = () => {
             <label className="" htmlFor="productImages">
               {t("productImages")}
             </label>
-            <input type="file" id="productImages" {...register("images")} />
+            <input
+              type="file"
+              id="productImages"
+              {...register("images")}
+              multiple
+            />
 
             {errors.images && <InputErrorMessage msg={errors.images.message} />}
           </div>
@@ -212,7 +221,7 @@ const AddProduct = () => {
           <div className="form-group">
             <label htmlFor="category">{t("category")}</label>
             <select className="productCategory" {...register("category")}>
-              <option selected disabled>
+              <option defaultValue={"select"} disabled>
                 select ...
               </option>
               {categories.map((category) => (

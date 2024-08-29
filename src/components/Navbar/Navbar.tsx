@@ -25,9 +25,9 @@ const Navbar = () => {
               <NavLink to="/admin">{t("admin")}</NavLink>
             </li>
           )}
-          <li>
+          {/* <li>
             <NavLink to="/products">{t("products")}</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/contact">{t("contact")}</NavLink>
           </li>

@@ -7,6 +7,8 @@ const initialState: ICartState = {
     ? (JSON.parse(localStorage.getItem("items") as string) as IProduct[])
     : [],
 };
+// existing code
+
 const CartSlice = createSlice({
   name: "cart",
   initialState,

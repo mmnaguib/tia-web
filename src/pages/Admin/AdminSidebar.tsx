@@ -20,6 +20,9 @@ const AdminSidebar = () => {
         <NavLink to="/admin/products">
           <i className="fa-solid fa-table"></i>Products
         </NavLink>
+        <NavLink to="/admin/users">
+          <i className="fa-solid fa-users"></i>Users
+        </NavLink>
       </div>
     </div>
   );

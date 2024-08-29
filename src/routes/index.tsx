@@ -22,6 +22,7 @@ import AddCategory from "../pages/Admin/AddCategory";
 import AddProduct from "../pages/Admin/AddProduct";
 import ProductsTable from "../pages/Admin/Tables/ProductsTable";
 import CategoriesTable from "../pages/Admin/Tables/CategoriesTable";
+import UsersTable from "../pages/Admin/Tables/UsersTable";
 
 const AppRoute = () => {
   const { token } = UseAppSelector((state) => state.auth);
@@ -98,6 +99,7 @@ const AppRoute = () => {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="users" element={<UsersTable />} />
           <Route path="categories" element={<CategoriesTable />} />
           <Route path="categories/add-category" element={<AddCategory />} />
           <Route path="products" element={<ProductsTable />} />

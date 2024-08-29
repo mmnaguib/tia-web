@@ -18,7 +18,7 @@ const useUsers = () => {
     fetchCategories();
   }, []);
 
-  return { users };
+  return { users, setUsers };
 };
 
 export default useUsers;

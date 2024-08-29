@@ -56,7 +56,7 @@ export interface IUser {
   address: string;
   phone: string;
   image?: File;
-  isAdmin?: boolean;
+  isAdmin: boolean;
 }
 
 export interface IAuthState {

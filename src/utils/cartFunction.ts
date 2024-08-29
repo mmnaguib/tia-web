@@ -9,7 +9,7 @@ export const addItemToCart = (
   if (isExisted) {
     return items.map((item) =>
       item._id === product._id
-        ? { ...item, quantity: item.quantity || 1 + quantity }
+        ? { ...item, quantity: (item.quantity || 1) + quantity }
         : item
     );
   } else {

@@ -25,6 +25,8 @@ const ProductsTable = () => {
           prevProducts.filter((product) => product._id !== _id)
         );
         Swal.fire("Deleted!", "Your category has been deleted.", "success");
+      } else {
+        return;
       }
     } catch (error) {
       console.error("Error deleting category:", error);
@@ -52,6 +54,7 @@ const ProductsTable = () => {
             <th>الالوان</th>
             <th>الاحجام</th>
             <th>القسم</th>
+            <th>الصور</th>
             <th>الحركات</th>
           </tr>
         </thead>
@@ -83,16 +86,45 @@ const ProductsTable = () => {
               </td>
               <td>
                 {product.sizes?.flatMap((size) =>
-                  size.split(",").map((s) => <span key={s}>{s}</span>)
+                  size.split(",").map((s) => (
+                    <span
+                      key={s}
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        border: "1px solid #f00",
+                        width: "30px",
+                        height: "30px",
+                        lineHeight: "25px",
+                      }}
+                    >
+                      {s}
+                    </span>
+                  ))
                 )}
               </td>
-              <td>{product.category}</td>
+              <td>{product.category.name}</td>
+              <td>
+                {product.images.map((image) => (
+                  <img
+                    src={"http://localhost:3000/" + image}
+                    width={50}
+                    key={"k" + image}
+                  />
+                ))}
+              </td>
               <td>
                 <button
-                  onClick={() => handleDelete(product._id)}
+                  onClick={() => handleDelete(String(product._id))}
                   className="btn btn-danger btn-sm"
                 >
                   <i className="fa fa-trash"></i>
+                </button>
+                <button
+                  onClick={() => handleDelete(String(product._id))}
+                  className="btn btn-warning btn-sm m-1"
+                >
+                  <i className="fa fa-edit"></i>
                 </button>
               </td>
             </tr>

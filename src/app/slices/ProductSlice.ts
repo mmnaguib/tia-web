@@ -9,7 +9,7 @@ const initialState: IProductsState = {
   loading: "idle",
   error: null,
   product: {
-    id: 0,
+    _id: "",
     title: "",
     description: "",
     price: 0,
@@ -43,6 +43,7 @@ const ProductSlice = createSlice({
       (state, action: PayloadAction<IProduct[]>) => {
         state.loading = "succeed";
         state.products = action.payload;
+        localStorage.setItem("products", JSON.stringify(state.products));
       }
     );
     builder.addCase(

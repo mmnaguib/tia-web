@@ -17,9 +17,12 @@ const ProductList = () => {
   }, [dispatch]);
 
   const ProductsList = products.map((product) => (
-    <div key={product.id} className="productCard">
-      <Link to={`/products/${product.id}`}>
-        <img src={product.images[0]} alt="product image" />
+    <div key={product._id} className="productCard">
+      <Link to={`/products/${product._id}`}>
+        <img
+          src={"http://localhost:3000/" + product.images[0]}
+          alt="product image"
+        />
       </Link>
       <h2>{sliceDescription(product.title, 24)}</h2>
       <p className="description">{sliceDescription(product.description, 50)}</p>

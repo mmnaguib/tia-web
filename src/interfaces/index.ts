@@ -1,19 +1,22 @@
 export interface ICategory {
   _id?: string | undefined;
   name: string;
-  image: FileList;
+  image: FileList | string;
 }
 
 export interface IProduct {
-  _id: string;
+  _id: number | string;
   title: string;
   description: string;
   price: number;
   quantity?: number;
   brand: string;
-  category: string;
+  category: {
+    name: "";
+    image: "";
+  };
   inStock: number;
-  images: FileList;
+  images: FileList[] | string[];
   colors: string[];
   sizes?: string[] | undefined;
   rating?: {

@@ -5,10 +5,10 @@ export const addItemToCart = (
   product: IProduct,
   quantity: number
 ) => {
-  const isExisted = items.find((item) => item.id === product.id);
+  const isExisted = items.find((item) => item._id === product._id);
   if (isExisted) {
     return items.map((item) =>
-      item.id === product.id
+      item._id === product._id
         ? { ...item, quantity: item.quantity || 1 + quantity }
         : item
     );

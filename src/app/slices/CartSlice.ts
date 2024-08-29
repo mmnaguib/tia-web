@@ -21,14 +21,14 @@ const CartSlice = createSlice({
     },
 
     removeProductFromCart(state, action: PayloadAction<number | string>) {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.items = state.items.filter((item) => item._id !== action.payload);
       localStorage.setItem("items", JSON.stringify(state.items));
     },
     updateProductQuantity: (
       state,
-      action: PayloadAction<{ id: number; quantity: number }>
+      action: PayloadAction<{ id: number | string; quantity: number }>
     ) => {
-      const item = state.items.find((item) => item.id === action.payload.id);
+      const item = state.items.find((item) => item._id === action.payload.id);
       if (item) {
         item.quantity = action.payload.quantity;
         localStorage.setItem("items", JSON.stringify(state.items));

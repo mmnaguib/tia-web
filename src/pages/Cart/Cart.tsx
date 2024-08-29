@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 // Define the type for the quantities state
 type QuantitiesType = {
-  [key: number]: number | undefined;
+  [key: number | string]: number | undefined;
 };
 
 const Cart = () => {
@@ -24,7 +24,7 @@ const Cart = () => {
   // Initialize quantities state from Redux store on mount
   useEffect(() => {
     const initialQuantities: QuantitiesType = items.reduce((acc, item) => {
-      acc[item.id] = item.quantity;
+      acc[item._id] = item.quantity;
       return acc;
     }, {} as QuantitiesType);
     setQuantities(initialQuantities);
@@ -76,17 +76,21 @@ const Cart = () => {
 
   // Calculate total price
   const totalPrice = items.reduce((total, item) => {
-    const quantity = quantities[item.id] || 1;
+    const quantity = quantities[item._id] || 1;
     return total + +item.price * quantity;
   }, 0);
 
   const cartItems = items.map((item) => (
-    <div key={item.id} className="cartItem">
+    <div key={item._id} className="cartItem">
       <div className="imgCart">
-        <img src={item.images[0]} width="100px" alt={item.title} />
+        <img
+          src={"http://localhost:3000/" + item.images[0]}
+          width="100px"
+          alt={item.title}
+        />
       </div>
 
-      <div className="cartDetail" id={`product${item.id}`}>
+      <div className="cartDetail" id={`product${item._id}`}>
         <h2>{item.title}</h2>
         <p>{sliceDescription(item.description, 30)}</p>
         <p>
@@ -98,30 +102,30 @@ const Cart = () => {
           <div className="quantityControl">
             <button
               className="decrease quantityBtn"
-              onClick={() => decreaseQuantity(item.id)}
-              disabled={quantities[item.id] === 1}
+              onClick={() => decreaseQuantity(+item._id)}
+              disabled={quantities[item._id] === 1}
             >
               -
             </button>
             <input
-              value={quantities[item.id] || 1}
-              onChange={(e) => handleQuantityChange(item.id, +e.target.value)}
+              value={quantities[item._id] || 1}
+              onChange={(e) => handleQuantityChange(+item._id, +e.target.value)}
               type="number"
-              data-product-id={item.id}
+              data-product-id={item._id}
               min="1"
               className="quantityInput"
-              disabled={quantities[item.id] === item.inStock}
+              disabled={quantities[item._id] === item.inStock}
             />
             <button
               className="increase quantityBtn"
-              onClick={() => increaseQuantity(item.id)}
+              onClick={() => increaseQuantity(+item._id)}
             >
               +
             </button>
 
             <button
               className="removeBtn"
-              onClick={() => dispatch(removeProductFromCart(item.id))}
+              onClick={() => dispatch(removeProductFromCart(item._id))}
             >
               {t("delete")}
             </button>

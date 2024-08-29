@@ -15,7 +15,11 @@ const SingleProduct = () => {
   return (
     <div className="singleProduct">
       <div className="productImage">
-        <img src={product.images[0]} alt="product image" width="500px" />
+        <img
+          src={"http://localhost:3000/" + product.images[0]}
+          alt="product image"
+          width="500px"
+        />
       </div>
       <div className="productDetail">
         <h2>{product.title}</h2>
@@ -45,9 +49,15 @@ const SingleProduct = () => {
         </div>
         <div className="lastDivInCard">
           <Link to={`/products/${product.category.name}`}>
-            {product.category.name}
             {/*اعمل لينك يبعتني علي كل البضاعة اللي القسم بتاعها دا  */}
-            {/* <img src={product.category.image} alt="category" /> */}
+            <img
+              src={"http://localhost:3000/" + product.category.image}
+              alt="category"
+              width={50}
+              height={50}
+              style={{ borderRadius: "50%" }}
+            />
+            {product.category.name}
           </Link>
           <div className="stock">
             {t("numberInStock")} : {product.inStock}
